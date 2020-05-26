@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: resRepo
+Version: 1.0.5
+Summary: UNKNOWN
+Home-page: UNKNOWN
+License: UNKNOWN
+Platform: UNKNOWN
+Requires: pyfolio
+Requires: pymongo
+Requires: arctic
+Requires: requests
+Requires: reportlab
+Requires: svglib
+Requires: optuna
+Requires-Python: >=3.0
+
+UNKNOWN
+
+

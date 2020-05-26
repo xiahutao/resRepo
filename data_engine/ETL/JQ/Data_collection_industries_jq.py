@@ -1,0 +1,29 @@
+#!/usr/bin/env python 
+# -*- coding: utf-8 -*-
+# @Time    : 2019/11/14 8:38
+# @Author  : jwliu
+# @Site    : 
+# @File    :
+# @Software: PyCharm
+
+import pandas
+import numpy
+from data_engine.data_factory import DataFactory
+import data_engine.setting as setting
+import jqdatasdk as jq
+# jq.auth('15160067538','1234567890')
+jq.auth('13155110265','110265')
+name_list=['sw_l1','zjw']
+for name in name_list:
+    industries = jq.get_industries(name=name)
+    industries.index.name = 'symbol'
+    industries.reset_index(inplace=True)
+
+    mongo_client = DataFactory.get_mongo_client()
+    db = mongo_client.get_database('MARKET')
+    collection = db.get_collection('industries_jq')
+    for idx, row in industries.iterrows():
+        row_dict = row.to_dict()
+        row_dict['type'] = name
+        collection.update_one(filter={'symbol':row_dict['symbol'],'name':name},update={'$set':row_dict},upsert=True)
+
